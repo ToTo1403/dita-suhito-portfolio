@@ -1,0 +1,22 @@
+---
+import SectionHeading from "./SectionHeading.astro";
+import { expertise } from "../data/expertise";
+---
+
+<section class="section expertise-section" id="expertise" aria-labelledby="expertise-title">
+  <div class="section__inner">
+    <SectionHeading number="02" eyebrow="ENGINEERING EXPERTISE" title="The layers behind the interface." id="expertise-title" />
+    <div class="expertise-grid">
+      {expertise.map((group, index) => (
+        <article class="expertise-group">
+          <p class="expertise-group__index">0{index + 1}</p>
+          <h3>{group.title}</h3>
+          <p class="expertise-group__description">{group.description}</p>
+          <ul>
+            {group.items.map((item) => <li>{item}</li>)}
+          </ul>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

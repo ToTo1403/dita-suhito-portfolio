@@ -1,0 +1,43 @@
+---
+import { getCollection } from "astro:content";
+import SiteLayout from "../layouts/SiteLayout.astro";
+import HeroIllustration from "../components/HeroIllustration.astro";
+import ProjectSection from "../components/ProjectSection.astro";
+import ExpertiseSection from "../components/ExpertiseSection.astro";
+import AboutSection from "../components/AboutSection.astro";
+import ContactSection from "../components/ContactSection.astro";
+import { site } from "../data/site";
+import { isPublishableProject } from "../data/projects";
+
+const projects = (await getCollection("projects"))
+  .filter(isPublishableProject)
+  .sort((a, b) => a.data.sortOrder - b.data.sortOrder);
+---
+
+<SiteLayout>
+  <main id="main">
+    <section class="hero section" aria-labelledby="hero-title">
+      <div class="hero__inner">
+        <div class="hero__copy">
+          <p class="eyebrow hero__eyebrow">{site.name} <span aria-hidden="true">/</span> {site.role}</p>
+          <h1 id="hero-title">{site.headline}</h1>
+          <p class="hero__intro">{site.intro}</p>
+          <div class="hero__actions">
+            <a class="button button--primary" href="#projects">Explore projects <span aria-hidden="true">↓</span></a>
+            <a class="button button--text" href={site.github.href} rel="me noopener noreferrer">
+              GitHub <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+          <p class="hero__note">Swift <span aria-hidden="true">·</span> UIKit <span aria-hidden="true">·</span> SwiftUI <span aria-hidden="true">·</span> Concurrency</p>
+        </div>
+        <HeroIllustration />
+      </div>
+      <div class="hero__bottom-rule" aria-hidden="true"></div>
+    </section>
+
+    <ProjectSection projects={projects} />
+    <ExpertiseSection />
+    <AboutSection />
+    <ContactSection />
+  </main>
+</SiteLayout>

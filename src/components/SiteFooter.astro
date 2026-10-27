@@ -1,0 +1,17 @@
+---
+import { site } from "../data/site";
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <p>© {year} {site.name}</p>
+    <nav aria-label="Footer navigation">
+      <a href="/#projects">Projects</a>
+      <a href="/#expertise">Expertise</a>
+      <a href="/#about">About</a>
+      <a href="/#contact">Contact</a>
+    </nav>
+    <a class="site-footer__github" href={site.github.href} rel="me noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+  </div>
+</footer>

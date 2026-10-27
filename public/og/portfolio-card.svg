@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#F7F5F0"/>
+  <path d="M74 100H1126M74 530H1126" stroke="#D8D7D1"/>
+  <text x="84" y="152" fill="#555E60" font-family="Arial,sans-serif" font-size="18" letter-spacing="4">DITA SUHITO / IOS DEVELOPER</text>
+  <text x="80" y="300" fill="#1E2222" font-family="Georgia,serif" font-size="74">Native iOS engineering,</text>
+  <text x="80" y="390" fill="#1E2222" font-family="Georgia,serif" font-size="74">from APIs to the app layer.</text>
+  <text x="84" y="478" fill="#294DA8" font-family="Arial,sans-serif" font-size="24">Swift · UIKit · SwiftUI · Swift Concurrency</text>
+  <circle cx="1020" cy="168" r="44" fill="#E9EDF7" stroke="#294DA8" stroke-width="2"/>
+  <circle cx="1020" cy="168" r="6" fill="#294DA8"/>
+  <path d="M1020 124v-42m0 130v42m-44-86h-42m130 0h42" stroke="#294DA8" stroke-width="2"/>
+</svg>

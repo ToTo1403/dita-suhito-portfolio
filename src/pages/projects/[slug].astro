@@ -1,0 +1,64 @@
+---
+import { getCollection, render } from "astro:content";
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import ProjectMedia from "../../components/ProjectMedia.astro";
+import { isPublishableProject } from "../../data/projects";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects");
+  return projects
+    .filter(isPublishableProject)
+    .map((project) => ({ params: { slug: project.id }, props: { project } }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+---
+
+<SiteLayout
+  currentPage="project"
+  title={project.data.title + " — Dita Suhito"}
+  description={project.data.summary}
+>
+  <main id="main" class="case-study">
+    <div class="case-study__inner">
+      <a class="back-link" href="/#projects"><span aria-hidden="true">←</span> All projects</a>
+      <header class="case-study__header">
+        <p class="eyebrow">PROJECT / CASE STUDY</p>
+        <h1>{project.data.title}</h1>
+        <p class="case-study__summary">{project.data.summary}</p>
+        {project.data.technologies.length > 0 && (
+          <ul class="tag-list" aria-label="Technologies">
+            {project.data.technologies.map((technology) => <li>{technology}</li>)}
+          </ul>
+        )}
+      </header>
+
+      {project.data.media.map((media) => <ProjectMedia media={media} />)}
+
+      <section class="case-study__overview" aria-label="Project overview">
+        <h2>Problem</h2>
+        <p>{project.data.problem}</p>
+        {project.data.solution && <><h2>Solution</h2><p>{project.data.solution}</p></>}
+        <h2>Role & contribution</h2>
+        <p><strong>{project.data.role}</strong></p>
+        <p>{project.data.contribution}</p>
+      </section>
+
+      <div class="case-study__body">
+        <Content />
+      </div>
+
+      {project.data.links.some((link) => link.verified) && (
+        <div class="case-study__links">
+          {project.data.links.filter((link) => link.verified).map((link) => (
+            <a class="text-link" href={link.href} target="_blank" rel="noopener noreferrer">
+              {link.label} <span aria-hidden="true">↗</span>
+            </a>
+          ))}
+        </div>
+      )}
+      <a class="back-link case-study__return" href="/#projects"><span aria-hidden="true">←</span> Back to projects</a>
+    </div>
+  </main>
+</SiteLayout>

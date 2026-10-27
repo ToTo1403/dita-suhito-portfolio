@@ -1,0 +1,74 @@
+---
+import { type CollectionEntry } from "astro:content";
+import SectionHeading from "./SectionHeading.astro";
+
+const { projects = [] } = Astro.props as { projects: CollectionEntry<"projects">[] };
+---
+
+<section class="section projects-section" id="projects" aria-labelledby="projects-title">
+  <div class="section__inner">
+    <SectionHeading number="01" eyebrow="SELECTED WORK" title="Projects" id="projects-title" />
+    {projects.length > 0 ? (
+      <div class="project-list">
+        {projects.map((project, index) => (
+          <article class:list={["project-row", index % 2 ? "project-row--reverse" : "", !project.data.media?.[0] && "project-row--textonly"]}>
+            {project.data.media?.[0] && (
+              <div class="project-row__media">
+                <img
+                  src={project.data.media[0].src}
+                  alt={project.data.media[0].alt}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+            )}
+            <div class="project-row__copy">
+              <p class="eyebrow">CASE STUDY / {String(index + 1).padStart(2, "0")}</p>
+              <h3>{project.data.title}</h3>
+              <p class="project-row__summary">{project.data.summary}</p>
+              {project.data.problem && <p class="project-row__problem"><span>Problem</span>{project.data.problem}</p>}
+              {project.data.contribution && <p class="project-row__contribution"><span>Contribution</span>{project.data.contribution}</p>}
+              {project.data.technologies.length > 0 && (
+                <ul class="tag-list" aria-label="Technologies">
+                  {project.data.technologies.slice(0, 4).map((technology) => <li>{technology}</li>)}
+                </ul>
+              )}
+              <div class="project-row__actions">
+                <a class="text-link" href={"/projects/" + project.id + "/"}>Read case study <span aria-hidden="true">↗</span></a>
+                {project.data.links.filter((link) => link.verified).map((link) => (
+                  <a class="text-link text-link--secondary" href={link.href} target="_blank" rel="noopener noreferrer">
+                    {link.label} <span aria-hidden="true">↗</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    ) : (
+      <div class="projects-empty">
+        <div class="projects-empty__mark" aria-hidden="true">
+          <span>00</span>
+          <span class="projects-empty__line"></span>
+          <span class="projects-empty__node"></span>
+        </div>
+        <div class="projects-empty__copy">
+          <p class="eyebrow">CASE STUDIES / NOT YET PUBLISHED</p>
+          <h3>No case studies are published yet.</h3>
+          <p>Project work will be added when its description, contribution, and permission to share are confirmed.</p>
+          <a class="text-link" href="#expertise">Explore engineering focus <span aria-hidden="true">↓</span></a>
+        </div>
+      </div>
+    )}
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLImageElement>(".project-row__media img").forEach((image) => {
+    image.addEventListener("error", () => {
+      const row = image.closest(".project-row");
+      image.closest(".project-row__media")?.remove();
+      row?.classList.add("project-row--textonly");
+    }, { once: true });
+  });
+</script>

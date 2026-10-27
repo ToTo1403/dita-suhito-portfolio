@@ -1,0 +1,14 @@
+---
+const { media } = Astro.props;
+---
+
+<figure class="case-media">
+  <img src={media.src} alt={media.alt} loading="lazy" decoding="async" />
+  {media.caption && <figcaption>{media.caption}</figcaption>}
+</figure>
+
+<script>
+  document.querySelectorAll<HTMLImageElement>(".case-media img").forEach((image) => {
+    image.addEventListener("error", () => image.closest("figure")?.remove(), { once: true });
+  });
+</script>

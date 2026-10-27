@@ -1,0 +1,22 @@
+{
+  "name": "dita-suhito-portfolio",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "astro": "^6.4.8",
+    "typescript": "^6.0.3"
+  },
+  "engines": {
+    "node": ">=22.19.0",
+    "npm": ">=9.6.5"
+  },
+  "overrides": {
+    "vite": "^7"
+  }
+}

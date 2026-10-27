@@ -1,0 +1,66 @@
+---
+import { site } from "../data/site";
+
+const { currentPage = "home" } = Astro.props;
+const nav = site.navigation;
+const navHref = (href: string) => currentPage === "home" ? href : "/" + href;
+---
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="wordmark" href="/" aria-label="Dita Suhito, home">
+      <span class="wordmark__mark" aria-hidden="true">DS</span>
+      <span>{site.name}</span>
+    </a>
+
+    <nav class="desktop-nav" aria-label="Main navigation">
+      {nav.map((item) => (
+        <a href={navHref(item.href)} class="nav-link">{item.label}</a>
+      ))}
+      <a class="nav-github" href={site.github.href} rel="me noopener noreferrer">
+        GitHub <span aria-hidden="true">↗</span>
+      </a>
+    </nav>
+
+    <details class="mobile-menu">
+      <summary aria-label="Open navigation">
+        <span class="mobile-menu__label">Menu</span>
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+          <path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
+        </svg>
+      </summary>
+      <nav aria-label="Mobile navigation">
+        {nav.map((item) => (
+          <a href={navHref(item.href)} class="nav-link">{item.label}</a>
+        ))}
+        <a class="nav-link nav-link--external" href={site.github.href} rel="me noopener noreferrer">
+          GitHub <span aria-hidden="true">↗</span>
+        </a>
+      </nav>
+    </details>
+  </div>
+</header>
+
+<script>
+  document.querySelectorAll<HTMLDetailsElement>(".mobile-menu").forEach((menu) => {
+    const summary = menu.querySelector("summary");
+    if (!summary) return;
+
+    menu.addEventListener("toggle", () => {
+      summary.setAttribute("aria-label", menu.open ? "Close navigation" : "Open navigation");
+    });
+
+    menu.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && menu.open) {
+        menu.open = false;
+        summary.focus();
+      }
+    });
+
+    menu.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        menu.open = false;
+      });
+    });
+  });
+</script>

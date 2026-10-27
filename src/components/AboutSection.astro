@@ -1,0 +1,20 @@
+---
+import SectionHeading from "./SectionHeading.astro";
+import { site } from "../data/site";
+---
+
+<section class="section about-section" id="about" aria-labelledby="about-title">
+  <div class="section__inner about-section__inner">
+    <div class="about-section__heading">
+      <SectionHeading number="03" eyebrow="ABOUT" title="Native iOS, end to end." id="about-title" />
+    </div>
+    <div class="about-section__copy">
+      <p class="about-section__lead">{site.intro}</p>
+      <p>{site.about}</p>
+      <div class="about-section__stack">
+        <span class="about-section__stack-label">CORE TECHNOLOGIES</span>
+        <span>Swift <i aria-hidden="true">·</i> UIKit <i aria-hidden="true">·</i> SwiftUI <i aria-hidden="true">·</i> Swift Concurrency <i aria-hidden="true">·</i> async/await</span>
+      </div>
+    </div>
+  </div>
+</section>
